@@ -87,7 +87,7 @@
 
     <div class="row">
       <div class="col-9">
-        <p class="lead">This app was developed using a deep learning model, can be deployed with AWS EC2 or S3 or other compute services. This demostration was implemented using S3 and CloudFont.
+        <p class="lead">This app was developed using a deep learning model, <b>can be deployed with AWS EC2 or S3 or other compute services and go global within 10 minutes. </b>
         </p><p class="lead">Use your phone to scan the QR code to the app URL.</p>
         <p class="lead">Demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, AWS Acredited Trainer</a></p>
       </div>
@@ -129,13 +129,16 @@
       const flip = true; // whether to flip the webcam
       webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
       await webcam.setup(); // request access to the webcam
-      await webcam.play();
-      window.requestAnimationFrame(loop);
+      
 
       // append elements to the DOM
       document.getElementById("webcam-container").appendChild(webcam.canvas);
       labelContainer = document.getElementById("label-container");
       labelContainer.appendChild(document.createElement("div"));
+
+
+      await webcam.play();
+      window.requestAnimationFrame(loop);//fix for iOS
 
       btn.innerText = "Stop";
       btn.classList.add("bg-danger");
