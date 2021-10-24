@@ -16,7 +16,7 @@
   <script src="./js/myjs.js"></script>
 </head>
 
-<body> 
+<body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top" id="home">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
       aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +36,8 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="modal" data-target="#exampleModal">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" data-toggle="modal"
+          data-target="#exampleModal">Search</button>
       </form>
     </div>
   </nav>
@@ -87,15 +88,18 @@
 
     <div class="row">
       <div class="col-9">
-        <p class="lead">This app was developed using a deep learning model, <b>can be deployed with AWS EC2 or S3 or other compute services and go global within 10 minutes. </b>
-        </p><p class="lead">Use your phone to scan the QR code to the app URL.</p>
-        <p class="lead">Demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, AWS Acredited Trainer</a></p>
+        <p class="lead">This app was developed using a deep learning model, <b>can be deployed with AWS EC2 or S3 or
+            other compute services and go global within 10 minutes. </b>
+        </p>
+        <p class="lead">Use your phone to scan the QR code to the app URL.</p>
+        <p class="lead">Demonstrated by <a href="https://petamind.com">Tung Nguyen</a>, Ph.D, AWS Acredited Trainer</a>
+        </p>
       </div>
       <div class="col-sm">
-        <img src="./img/QR/1.png"  class="center-block"/>
+        <img src="./img/QR/1.png" class="center-block" />
       </div>
     </div>
-    
+
   </div>
 
   <script type="text/javascript">
@@ -129,13 +133,19 @@
       const flip = true; // whether to flip the webcam
       webcam = new tmImage.Webcam(200, 200, flip); // width, height, flip
       await webcam.setup(); // request access to the webcam
-      
 
-      // append elements to the DOM
-      document.getElementById("webcam-container").appendChild(webcam.canvas);
+      // grab video-object in any way you want and set the attributes --> **"muted" and "playsinline"**
+      if(iOS()){
+        document.getElementById("webcam-container").appendChild(webcam.webcam);
+        let wc = document.getElementsByTagName('video')[0];
+        wc.setAttribute("playsinline", true); // written with "setAttribute" bc. iOS buggs otherwise :-)
+        wc.muted = "true"
+        wc.id = "webcamVideo";
+      } else  {
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+      }
       labelContainer = document.getElementById("label-container");
       labelContainer.appendChild(document.createElement("div"));
-
 
       await webcam.play();
       window.requestAnimationFrame(loop);//fix for iOS
@@ -144,6 +154,19 @@
       btn.classList.add("bg-danger");
       camOn = !camOn;
 
+    }
+
+    function iOS() {
+      return [
+        'iPad Simulator',
+        'iPhone Simulator',
+        'iPod Simulator',
+        'iPad',
+        'iPhone',
+        'iPod'
+      ].includes(navigator.platform)
+        // iPad on iOS 13 detection
+        || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
     }
 
     async function loop() {
