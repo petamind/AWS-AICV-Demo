@@ -8,6 +8,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -63,15 +64,15 @@
     </div>
   </div>
 
-  <div class="container" id="face">
+  <div class="container bg-light" id="face">
     <h1 class="display-4">Hi there,</h1>
-    <p class="lead">I am a (machine) student of Tung. I can see common objects, e.g. cups, hands, phones,
+    <p class="lead">I am a (🤖) student of Tung. I can see common objects, e.g. cups, hands, phones,
       and some AMZ guys comparisons. <br/>
-    If I make mistakes, you should ask Tung. He definitely did not train me well!</p>
+    If I make mistakes, you should ask Tung. He definitely did not train me well enough!</p>
   </div>
 
 
-  <div class="container my-4 ">
+  <div class="container my-4">
     <div class="row">
       <div class="col-sm d-flex justify-content-center" id="webcam-container">
       </div>
@@ -79,9 +80,10 @@
         <img class="img-responsive rounded-circle" id="target">
       </div>
     </div>
+    <div class="container my-3 d-flex justify-content-center" id="label-container"></div>
   </div>
 
-  <div class="container d-flex justify-content-center" id="label-container"></div>
+  
   <div class="container"><button id="start" type="button" class="btn btn-primary" onclick="init()">Start</button>
   </div>
   <div class="container my-4 bg-light" id="about">
@@ -182,7 +184,8 @@
       const prediction = await model.predict(webcam.canvas);
       const probs = prediction.map(pr => pr.probability * 100);
       //console.log(probs);
-      const maxProb = (Math.max(...probs)).toFixed(1);
+      const maxProb = (Math.max(...probs)).toFixed(0);
+      const maxProb2 = parseInt(maxProb) + (10 - parseInt(maxProb)%10)
       const label = prediction[argMax(probs)].className;
 
       const img = document.getElementById("target");
@@ -194,7 +197,7 @@
 
       img.height = "200";
 
-      labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">Well, you look like ... ${label} ${maxProb} %</h5>`;//classPrediction;
+      labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">"Well, you look like ... ${label} ${maxProb2}%"</h5>`;//classPrediction;
       // }
     }
   </script>
