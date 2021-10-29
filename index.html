@@ -8,7 +8,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -144,8 +143,13 @@
         wc.setAttribute("playsinline", true); // written with "setAttribute" bc. iOS buggs otherwise :-)
         wc.muted = "true"
         wc.id = "webcamVideo";
+        wc.setAttribute('height', '200');
+        wc.setAttribute('width', '200');
+        wc.classList.add("rounded");
       } else  {
         document.getElementById("webcam-container").appendChild(webcam.canvas);
+        document.getElementsByTagName("canvas")[0].classList.add("rounded-circle");
+        //webcam.canvas.classList.add("rounded-circle");
       }
       labelContainer = document.getElementById("label-container");
       labelContainer.appendChild(document.createElement("div"));
@@ -197,7 +201,7 @@
 
       img.height = "200";
 
-      labelContainer.childNodes[0].innerHTML = `<h5 class=\"lead text-success\">"Well, you look like ... ${label} ${maxProb2}%"</h5>`;//classPrediction;
+      labelContainer.childNodes[0].innerHTML = `<h4 class=\"display-5 text-info\">"Well, you look like ... ${label} ${maxProb2}%"</h5>`;//classPrediction;
       // }
     }
   </script>
